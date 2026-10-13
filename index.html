@@ -2,60 +2,149 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>A TU PASO</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: white;
-      color: black;
-      text-align: center;
-    }
-    header {
-      background: #543B2B;
-      color: white;
-      padding: 25px;
-    }
-    nav {
-      padding: 20px;
-    }
-    nav a {
-      margin: 12px;
-      color: #543B2B;
-      text-decoration: none;
-    }
-    main {
-      padding: 80px 20px;
-    }
-    button {
-      background: #543B2B;
-      color: white;
-      border: none;
-      padding: 15px 30px;
-      cursor: pointer;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A TU PASO | Sandalias</title>
+<style>
+* {box-sizing:border-box}
+body {margin:0;font-family:Arial,sans-serif;color:#211b18;background:white}
+header {background:#fff;padding:22px;text-align:center;border-bottom:1px solid #ddd}
+header h1 {font-family:Georgia,serif;letter-spacing:4px;margin:0}
+header p {color:#795744;font-style:italic}
+nav {display:flex;justify-content:center;gap:24px;padding:16px;background:#38271f}
+nav a {color:white;text-decoration:none}
+.hero {padding:90px 20px;text-align:center;background:#eee5dd}
+.hero h2 {font-family:Georgia,serif;font-size:40px}
+button {background:#543b2b;color:white;border:0;padding:14px 24px;cursor:pointer;border-radius:4px}
+section {padding:45px 20px;text-align:center}
+.productos {display:flex;gap:20px;justify-content:center;flex-wrap:wrap}
+.producto {border:1px solid #ddd;border-radius:10px;padding:20px;width:230px}
+.sandalia {font-size:75px;padding:25px;background:#f5f0ec}
+select {padding:12px;margin:8px;border:1px solid #bbb}
+#vista {font-size:90px;margin:25px}
+footer {background:#38271f;color:white;padding:25px;text-align:center}
+</style>
 </head>
 <body>
-  <header>
-    <h1>A TU PASO</h1>
-    <p>Tu estilo, diseñado por ti</p>
-  </header>
 
-  <nav>
-    <a href="#inicio">Inicio</a>
-    <a href="#personalizar">Personalizar</a>
-    <a href="#catalogo">Catálogo</a>
-  </nav>
+<header>
+<h1>A TU PASO</h1>
+<p>Tu estilo, diseñado por ti</p>
+</header>
 
-  <main id="inicio">
-    <h2>Diseña tus sandalias</h2>
-    <p>Crea un diseño que refleje tu estilo.</p>
-    <button onclick="alert('Próximamente: personalizador')">
-      Personalizar ahora
-    </button>
-  </main>
+<nav>
+<a href="#inicio">Inicio</a>
+<a href="#catalogo">Catálogo</a>
+<a href="#personalizar">Personalizar</a>
+<a href="#carrito">Carrito</a>
+</nav>
+
+<div class="hero" id="inicio">
+<h2>Diseña sandalias a tu estilo</h2>
+<p>Elige tus detalles favoritos y crea algo único.</p>
+<a href="#personalizar"><button>Diseñar ahora</button></a>
+</div>
+
+<section id="catalogo">
+<h2>Nuestros modelos</h2>
+<div class="productos">
+<div class="producto">
+<div class="sandalia">👡</div>
+<h3>Sandalia clásica</h3>
+<p>Diseño elegante y cómodo</p>
+<button onclick="elegir('Clásica')">Personalizar</button>
+</div>
+<div class="producto">
+<div class="sandalia">👠</div>
+<h3>Sandalia de tacón</h3>
+<p>Para ocasiones especiales</p>
+<button onclick="elegir('Tacón')">Personalizar</button>
+</div>
+</div>
+</section>
+
+<section id="personalizar">
+<h2>Personaliza tu sandalia</h2>
+<p>Modelo: <strong id="modelo">Clásica</strong></p>
+<div id="vista">👡</div>
+
+<label>Color de base</label>
+<select id="base" onchange="actualizar()">
+<option>Negro</option>
+<option>Café</option>
+<option>Blanco</option>
+</select>
+
+<label>Tipo de tiras</label>
+<select id="tiras" onchange="actualizar()">
+<option>Rectas</option>
+<option>Cruzadas</option>
+<option>Delgadas</option>
+</select>
+
+<label>Accesorio</label>
+<select id="accesorio" onchange="actualizar()">
+<option>Hebilla dorada</option>
+<option>Hebilla plateada</option>
+<option>Sin accesorio</option>
+</select>
+
+<label>Talla</label>
+<select id="talla">
+<option>35</option><option selected>36</option>
+<option>37</option><option>38</option>
+<option>39</option><option>40</option>
+</select>
+
+<p id="detalle"></p>
+<button onclick="agregar()">Agregar al carrito</button>
+</section>
+
+<section id="carrito">
+<h2>Mi carrito</h2>
+<div id="pedidos">Todavía no tienes productos.</div>
+</section>
+
+<footer>
+<p>A TU PASO © 2026</p>
+<p>Tu estilo, diseñado por ti</p>
+</footer>
+
+<script>
+let modeloActual="Clásica";
+let carrito=[];
+
+function elegir(modelo){
+ modeloActual=modelo;
+ document.getElementById("modelo").textContent=modelo;
+ actualizar();
+ location.hash="personalizar";
+}
+function actualizar(){
+ const base=document.getElementById("base").value;
+ const tiras=document.getElementById("tiras").value;
+ const accesorio=document.getElementById("accesorio").value;
+ document.getElementById("vista").textContent=
+ modeloActual==="Tacón"?"👠":"👡";
+ document.getElementById("detalle").textContent=
+ `Base: ${base} | Tiras: ${tiras} | Accesorio: ${accesorio}`;
+}
+function agregar(){
+ const pedido={
+ modelo:modeloActual,
+ base:document.getElementById("base").value,
+ tiras:document.getElementById("tiras").value,
+ accesorio:document.getElementById("accesorio").value,
+ talla:document.getElementById("talla").value
+ };
+ carrito.push(pedido);
+ document.getElementById("pedidos").innerHTML=
+ carrito.map((p,i)=>`<p>${i+1}. ${p.modelo} -
+ ${p.base}, ${p.tiras}, ${p.accesorio},
+ talla ${p.talla}</p>`).join("");
+ location.hash="carrito";
+}
+actualizar();
+</script>
 </body>
 </html>
